@@ -12,8 +12,8 @@ speed_y = 7
 font1 = font.Font(None,30)
 font2 = font.Font(None,70)
 
-win = font2.render('Ты победил!',True,(0,255,0))
-lose = font2.render('Ты проиграл!',True,(250,0,0))
+win1 = font2.render('Победил Первый игрок!',True,(0,0,0))
+win2 = font2.render('Победил Второй игрок!',True,(0,0,0))
 
 
 
@@ -82,8 +82,16 @@ while game:
 
         if sprite.collide_rect(player1,ball) or sprite.collide_rect(player2,ball):
             speed_x *= -1
-            speed_x += 1
+
+        if ball.rect.x <= 0:
+            window.blit(win2,(50,50))
+            finish = True
+        if ball.rect.x >= 700:
+            window.blit(win1,(50,50))
+            finish = True
+            
 
 
     clock.tick(fps)
     display.update()
+
