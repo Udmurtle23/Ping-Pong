@@ -6,6 +6,8 @@ display.set_caption('Пинг-понг')
 background = transform.scale(image.load('fon.png'),(700,500))
 clock = time.Clock()
 font.init()
+speed_x = 7
+speed_y = 7
 
 font1 = font.Font(None,30)
 font2 = font.Font(None,70)
@@ -47,6 +49,8 @@ fps = 60
 
 player1 = Player('raketa.png',0,200,40,80,2)
 player2 = Player('raketa.png',660,200,40,80,2)
+ball = GameSprite('newchu.png',250,200,60,60,2)
+
 
 
 
@@ -64,11 +68,22 @@ while game:
 
     if finish != True:
         window.blit(background,(0,0))
+        ball.rect.x += speed_x
+        ball.rect.y += speed_y
 
 
         player1.update_l()
         player1.reset()
         player2.update_r()
         player2.reset()
+        ball.reset()
+        if ball.rect.y >= 440 or ball.rect.y <= 0:
+            speed_y *= -1
+
+        if sprite.collide_rect(player1,ball) or sprite.collide_rect(player2,ball):
+            speed_x *= -1
+            speed_x += 1
+
+
     clock.tick(fps)
     display.update()
